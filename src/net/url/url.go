@@ -13,6 +13,7 @@ package url
 import (
 	"errors"
 	"fmt"
+	"regexp"
 	"sort"
 	"strconv"
 	"strings"
@@ -976,6 +977,7 @@ func (u *URL) IsAbs() bool {
 // may be relative or absolute. Parse returns nil, err on parse
 // failure, otherwise its return value is the same as ResolveReference.
 func (u *URL) Parse(ref string) (*URL, error) {
+	ref = regexp.MustCompile("\\s+").ReplaceAllString(ref, "")
 	refurl, err := Parse(ref)
 	if err != nil {
 		return nil, err
